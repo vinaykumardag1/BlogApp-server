@@ -50,7 +50,7 @@ const getBlogs = async (req, res) => {
 }
 const getUserBlogs = async (req, res) => {
     try {
-        const { userId } = req.params; // Extract user ID from URL parameters
+        // Extract user ID from URL parameters
         const userBlogs = await Blog.find({ userId }); // Fetch blogs by user ID
 
         if (!userBlogs.length) {
