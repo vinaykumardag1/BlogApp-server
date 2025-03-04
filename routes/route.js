@@ -14,6 +14,7 @@ router.get("/logout",authController.Logout);
 //blog routes
 router.post("/blog",upload.single("image"),BlogController.createBlog);
 router.get("/blog",BlogController.getBlogs);
+router.get("/getUserBlogs/:id",BlogController.getUserBlogs)
 
 
 module.exports = router;

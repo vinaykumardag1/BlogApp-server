@@ -48,11 +48,27 @@ const getBlogs = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const getUserBlogs = async (req, res) => {
+    try {
+        const { userId } = req.params; // Extract user ID from URL parameters
+        const userBlogs = await Blog.find({ userId }); // Fetch blogs by user ID
+
+        if (!userBlogs.length) {
+            return res.status(404).json({ message: "No blogs found for this user" });
+        }
+
+        res.status(200).json(userBlogs);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
 
 module.exports = {
     createBlog,
     upload,
     getBlogs,
+    getUserBlogs,
 }
 
 

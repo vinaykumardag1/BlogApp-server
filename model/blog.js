@@ -20,7 +20,7 @@ const blogSchema = new mongoose.Schema({
         ref:'Blog',
         required:true
     }
-});
+},{ timestamps: true });
 
 const Blog = mongoose.model('Blog', blogSchema);
 
