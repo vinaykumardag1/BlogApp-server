@@ -1,4 +1,3 @@
-
 const path = require("path");
 
 const Blog = require("../model/blog");
@@ -63,12 +62,61 @@ const getUserBlogs = async (req, res) => {
     }
 };
 
+const updateBlog = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, content } = req.body;
+
+        let updateData = { title, content };
+
+        if (req.file) {
+            updateData.image = {
+                buffer: req.file.buffer,
+                contentType: req.file.mimetype,
+                name: req.file.originalname,
+                path: `/uploads/${req.file.filename}`,
+            };
+        }
+
+        const updatedBlog = await Blog.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true }
+        );
+
+        if (!updatedBlog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+
+        res.status(200).json({ message: "Blog updated successfully", blog: updatedBlog });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+const deleteBlog = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedBlog = await Blog.findByIdAndDelete(id);
+
+        if (!deletedBlog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+
+        res.status(200).json({ message: "Blog deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
 
 module.exports = {
     createBlog,
     upload,
     getBlogs,
     getUserBlogs,
+    updateBlog,
+    deleteBlog,
 }
 
 
