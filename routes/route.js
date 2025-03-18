@@ -14,6 +14,7 @@ router.get("/logout",authController.Logout);
 //blog routes
 router.post("/blog",upload.single("image"),BlogController.createBlog);
 router.get("/blog",BlogController.getBlogs);
+router.get("/blog/:id",BlogController.getOneBlog)
 // router.get("/getUserBlogs/:userId",BlogController.getUserBlogs)
 router.put('/blog/:id',BlogController.updateBlog);
 router.delete('/blog/:id', BlogController.deleteBlog);
